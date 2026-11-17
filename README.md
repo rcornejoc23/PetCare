@@ -61,6 +61,36 @@ En POST y PUT manuales: **Body → raw → JSON**.
 
 Para eliminar en orden: primero las citas, luego las mascotas y por último el dueño.
 
+## Frontend (React + Vite)
+Carpeta `frontend/`. Consume la API con `fetch` (archivo `src/api.js`).
+
+**Requisitos:** Node.js 20 o superior y el backend corriendo en `http://localhost:8080`.
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+Abrir `http://localhost:5173` (el puerto está fijo porque el CORS del backend solo acepta ese origen).
+Para usar otra URL de API, copiar `.env.example` a `.env` y cambiar `VITE_API_URL`.
+
+| Pestaña | Qué permite |
+|---|---|
+| Dueños | Listar, buscar, crear, editar y eliminar dueños. Al seleccionar uno se ven **sus mascotas** (`GET /api/duenos/{id}/mascotas`), se pueden agregar mascotas y, al abrir una mascota, ver **sus citas** (`GET /api/mascotas/{id}/citas`) y **registrar una cita** con un formulario. |
+| Mascotas | CRUD completo de mascotas, eligiendo el dueño en una lista. |
+| Citas | Formulario para registrar citas y CRUD de todas las citas (con el total de costos). |
+
+Los errores del backend (404, 409, validaciones 400 por campo) se muestran como aviso y bajo cada campo del formulario.
+
+Estructura (`frontend/src`):
+| Archivo | Contenido |
+|---|---|
+| `api.js` | Llamadas `fetch` a todos los endpoints y manejo de errores |
+| `utils.js` | Formato de fechas, costos (CLP) e íconos por especie |
+| `App.jsx` | Barra superior, pestañas y avisos |
+| `components/*Page.jsx` | Pantallas de Dueños, Mascotas y Citas |
+| `components/*Form.jsx` | Formularios de Dueño, Mascota y Cita |
+
 ## Logrado y pendiente
 - Logrado: backend completo en capas, relaciones, validaciones, CRUD y endpoints de relación, base H2 persistente.
-- Pendiente: frontend React (opcional).
+- Logrado: frontend React que lista dueños, muestra sus mascotas y citas, y registra citas mediante formulario (además de CRUD completo de las tres entidades).
